@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">Suber</string>
+
+    <string name="prompt_email">Email</string>
+    <string name="prompt_username">Username</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_firstname">Firstname</string>
+    <string name="prompt_lastname">Lastname</string>
+    <string name="action_register">register</string>
+    <string name="action_login">Login</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="driver">Driver</string>
+    <string name="passenger">Passenger</string>
+    <string name="student_number">student number</string>
+    <string name="car">Car</string>
+    <string name="action_logout">Logout</string>
+    <string name="action_other_courses">Other courses</string>
+    <string name="course_img">Course Image</string>
+    <string name="course_search">Search course</string>
+    <string name="course_create">Create Course</string>
+    <string name="course_name">Course Name</string>
+    <string name="hw_name">Homework Name</string>
+    <string name="hw_question">Question ?</string>
+    <string name="hw_create">Create Homework</string>
+    <string name="hw_search">Search Homework</string>
+    <string name="hw_answer">Your Answer</string>
+    <string name="hw_submit">Submit</string>
+    <string name="hw_edit_name">Edit Name</string>
+    <string name="hw_grade">Submit Grade</string>
+</resources>
