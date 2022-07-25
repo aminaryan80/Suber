@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from account.models import Passenger, Driver
 
 
-class LoginView(APIView):
+class GetProfileView(APIView):
 
     def get(self, request):
         data = request.query_params
@@ -31,6 +31,7 @@ class LoginView(APIView):
                 'username': user.username,
                 'first_name': user.first_name,
                 'last_name': user.last_name,
-                'balance': user.balance
+                'balance': user.balance,
+                'extra': user.car if user_type == 'D' else ''
             }
         )

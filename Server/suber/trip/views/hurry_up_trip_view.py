@@ -5,47 +5,36 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from account.models import Passenger
-from discount.models import DiscountCode
 from trip.models import OnGoingTrip
 
 
-class SearchForDriverView(APIView):
+class HurryUpTripView(APIView):
 
     def put(self, request):
         data = request.data
         try:
             username = data['username']
-            source = data['source']
-            destination = data['destination']
-            discount_code = data['discount_code']
-            price = data['price']
         except MultiValueDictKeyError:
             raise ValidationError('Some data is missing!')
 
-        self._search(username, source, destination, discount_code, price)
+        self._hurry_up_trip(username)
 
         return Response('ok')
 
-    def _search(self, username, source, destination, discount_code, price):
+    def _hurry_up_trip(self, username):
         passenger = get_object_or_404(Passenger, username=username)
 
-        final_price = self._calculate_price(price, discount_code)
+        trip = OnGoingTrip.objects.filter(passenger=passenger).first()
+        price = trip.price
 
-        if passenger.balance < final_price:
-            raise NotAcceptable('Your balance is lower than trip price')
+        if not trip:
+            raise NotAcceptable('You have no on-going trip!')
 
-        OnGoingTrip.objects.filter(username=username).delete()
+        if OnGoingTrip.objects.filter(passenger=passenger).count() > 1:
+            OnGoingTrip.objects.filter(pk__neq=trip.id, passenger=passenger).delete()
 
-        OnGoingTrip.objects.create(
-            passenger=passenger,
-            source=source,
-            destination=destination,
-            price=final_price
-        )
+        if passenger.balance < price * 1.2:
+            raise NotAcceptable('Your balance is lower than trip price!')
 
-    def _calculate_price(self, price, discount_code):
-        if discount_code:
-            discount = get_object_or_404(DiscountCode, code=discount_code)
-            return price - (price * discount.percent // 100)
-
-        return price
+        trip.price = price * 1.2
+        trip.save()

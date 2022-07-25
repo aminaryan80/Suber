@@ -10,32 +10,32 @@ public class RegisterHandler {
     private final String lastname;
     private final String password;
     private final String extra;
-    private final boolean isStudent;
+    private final boolean isPassenger;
 
     public RegisterHandler(
             String username, String password, String firstname,
-            String lastname, String extra, boolean isStudent
+            String lastname, String extra, boolean isPassenger
     ) {
         this.username = username;
         this.password = password;
         this.firstname = firstname;
         this.lastname = lastname;
         this.extra = extra;
-        this.isStudent = isStudent;
+        this.isPassenger = isPassenger;
     }
 
     public User register() {
         User result;
-        if (this.isStudent) {
-            result = register_student();
+        if (this.isPassenger) {
+            result = register_passenger();
         } else {
-            result = register_professor();
+            result = register_driver();
         }
         return result;
     }
 
-    private User register_professor() {
-        if (User.getProfessorByUsername(this.username) != null) {
+    private User register_driver() {
+        if (User.getDriverByUsername(this.username) != null) {
             return null;
         }
         return new Driver(
@@ -48,8 +48,8 @@ public class RegisterHandler {
     }
 
 
-    private User register_student() {
-        if (User.getStudentByUsername(this.username) != null) {
+    private User register_passenger() {
+        if (User.getPassengerByUsername(this.username) != null) {
             return null;
         }
         return new Passenger(

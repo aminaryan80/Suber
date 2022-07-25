@@ -68,11 +68,11 @@ public abstract class User {
         return this.type.equals(PASSENGER);
     }
 
-    public static Driver getProfessorByUsername(String username) {
+    public static Driver getDriverByUsername(String username) {
         return (Driver) getUserByUsername(username, User.DRIVER);
     }
 
-    public static Passenger getStudentByUsername(String username) {
+    public static Passenger getPassengerByUsername(String username) {
         return (Passenger) getUserByUsername(username, User.PASSENGER);
     }
 

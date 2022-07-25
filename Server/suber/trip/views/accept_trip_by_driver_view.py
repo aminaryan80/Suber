@@ -4,7 +4,7 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from account.models import Passenger
+from account.models import Passenger, Driver
 from trip.models import OnGoingTrip, DriverTripHistory, PassengerTripHistory
 
 
@@ -22,12 +22,13 @@ class AcceptTripByDriverView(APIView):
         return Response('ok')
 
     def _accept_trip(self, username, trip_id):
-        driver = get_object_or_404(Passenger, username=username)
+        driver = get_object_or_404(Driver, username=username)
         trip = OnGoingTrip.objects.get(pk=trip_id)
         passenger = trip.passenger
 
         PassengerTripHistory.objects.create(
-            passenger=trip.passenger,
+            passenger=passenger,
+            driver=driver,
             source=trip.source,
             destination=trip.destination,
             price=trip.price
