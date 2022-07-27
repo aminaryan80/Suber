@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void login(String username, String password, boolean isPassenger) {
         try {
-            String url = "http://192.168.1.11:8000/account/login/";
+            String url = "http://192.168.42.98:8000/account/login/";
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("username", username);
             jsonBody.put("password", password);

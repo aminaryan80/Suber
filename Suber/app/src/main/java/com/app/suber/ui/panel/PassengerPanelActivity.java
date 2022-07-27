@@ -26,6 +26,13 @@ import java.nio.charset.StandardCharsets;
 
 public class PassengerPanelActivity extends AppCompatActivity {
     private String username;
+    private TextView balanceTextView;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updatePage();
+    }
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -33,22 +40,21 @@ public class PassengerPanelActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_passenger_panel);
 
-        Intent intent = getIntent();
-        username = intent.getStringExtra("username");
+        username = getIntent().getStringExtra("username");
 
         Button searchButton = findViewById(R.id.searchButton);
         Button profileButton = findViewById(R.id.profileButton);
         Button submitLocationButton = findViewById(R.id.submitLocationButton);
         TextView sourceTextView = findViewById(R.id.sourceTextView);
         TextView destinationTextView = findViewById(R.id.destinationTextView);
-        TextView balanceTextView = findViewById(R.id.balanceTextView);
+        balanceTextView = findViewById(R.id.balanceTextView);
         EditText sourceLongitudeEditText = findViewById(R.id.sourceLongitudeEditText);
         EditText sourceLatitudeEditText = findViewById(R.id.sourceLatitudeEditText);
         EditText destinationLongitudeEditText = findViewById(R.id.destinationLongitudeEditText);
         EditText destinationLatitudeEditText = findViewById(R.id.destinationLatitudeEditText);
         EditText discountEditText = findViewById(R.id.discountEditText);
 
-        updatePage(balanceTextView);
+        updatePage();
 
         searchButton.setOnClickListener(view -> {
             searchForCar(
@@ -59,7 +65,9 @@ public class PassengerPanelActivity extends AppCompatActivity {
         });
 
         profileButton.setOnClickListener(view -> {
-            Toast.makeText(PassengerPanelActivity.this, "Profile", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(PassengerPanelActivity.this, PassengerProfileActivity.class);
+            intent.putExtra("username", username);
+            startActivity(intent);
         });
 
         submitLocationButton.setOnClickListener(view -> {
@@ -68,8 +76,8 @@ public class PassengerPanelActivity extends AppCompatActivity {
         });
     }
 
-    private void updatePage(TextView balanceTextView) {
-        String url = "http://192.168.1.11:8000/account/get-profile/?user_type=P&username=" + username;
+    private void updatePage() {
+        String url = "http://192.168.42.98:8000/account/get-profile/?user_type=P&username=" + username;
         @SuppressLint("SetTextI18n") StringRequest myRequest = new StringRequest(Request.Method.GET, url,
                 response -> {
                     try {
@@ -86,7 +94,7 @@ public class PassengerPanelActivity extends AppCompatActivity {
 
     private void searchForCar(String source, String destination, String discount_code) {
         try {
-            String url = "http://192.168.1.11:8000/trip/search-for-driver/";
+            String url = "http://192.168.42.98:8000/trip/search-for-driver/";
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("username", username);
             jsonBody.put("source", source);

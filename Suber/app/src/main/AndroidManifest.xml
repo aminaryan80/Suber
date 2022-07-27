@@ -16,6 +16,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="n">
         <activity
+            android:name=".ui.panel.DiscountCodesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.panel.ChargeAccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.panel.PassengerProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.panel.FindingDriverActivity"
             android:exported="false" />
         <activity

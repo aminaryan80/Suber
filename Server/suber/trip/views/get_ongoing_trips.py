@@ -12,5 +12,4 @@ class GetOngoingTripsView(APIView):
             'destination',
             'price'
         ))
-        print(data)
         return JsonResponse(data, safe=False)

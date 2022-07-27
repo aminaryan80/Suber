@@ -78,7 +78,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.WeatherViewHol
     private void acceptTrip(String[] trip) {
         String tripId = trip[3];
         try {
-            String url = "http://192.168.1.11:8000/trip/accept-trip/";
+            String url = "http://192.168.42.98:8000/trip/accept-trip/";
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("username", username);
             jsonBody.put("trip_id", tripId);

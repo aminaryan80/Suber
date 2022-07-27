@@ -25,7 +25,8 @@ class ChargeBalancePassengerView(APIView):
             raise NotAcceptable('Transaction was not successful!')
 
         passenger = get_object_or_404(Passenger, username=username)
-        passenger.balance += amount
+        passenger.balance += int(amount)
+        passenger.save()
 
     def _verify_payment(self):
         return True

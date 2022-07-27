@@ -94,7 +94,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void register(String username, String password, String firstname, String lastname, String extra, boolean isPassenger) {
         try {
-            String url = "http://192.168.1.11:8000/account/register/";
+            String url = "http://192.168.42.98:8000/account/register/";
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("username", username);
             jsonBody.put("password", password);

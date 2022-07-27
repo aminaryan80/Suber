@@ -47,7 +47,7 @@ public class FindingDriverActivity extends AppCompatActivity {
 
     private void checkTripStatus() {
 
-        String url = "http://192.168.1.11:8000/trip/get-trip-status/?username=" + username;
+        String url = "http://192.168.42.98:8000/trip/get-trip-status/?username=" + username;
         StringRequest myRequest = new StringRequest(Request.Method.GET, url,
                 response -> {
                     try {
@@ -81,7 +81,7 @@ public class FindingDriverActivity extends AppCompatActivity {
 
     private void hurryUpTrip(String username) {
         try {
-            String url = "http://192.168.1.11:8000/trip/hurry-up/";
+            String url = "http://192.168.42.98:8000/trip/hurry-up/";
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("username", username);
             final String requestBody = jsonBody.toString();

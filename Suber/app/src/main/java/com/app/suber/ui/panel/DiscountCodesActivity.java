@@ -1,12 +1,9 @@
 package com.app.suber.ui.panel;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,33 +17,23 @@ import com.app.suber.R;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-public class DriverPanelActivity extends AppCompatActivity {
-    private TripAdapter adapter;
+public class DiscountCodesActivity extends AppCompatActivity {
+    private DiscountAdapter adapter;
     private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_driver_panel);
+        setContentView(R.layout.activity_discount_codes);
 
-        Intent intent = getIntent();
-        username = intent.getStringExtra("username");
-
-        Button reloadButton = findViewById(R.id.reloadButton);
-        Button acceptButton = findViewById(R.id.acceptButton);
-        ConstraintLayout driverPanelView = findViewById(R.id.driverPanelView);
-
-        driverPanelView.setOnClickListener(view -> acceptButton.setEnabled(false));
-
-        reloadButton.setOnClickListener(view -> updateData());
+        username = getIntent().getStringExtra("username");
 
         handleRecyclerView();
         updateData();
-
     }
 
     private void updateData() {
-        String url = "http://192.168.42.98:8000/trip/get-ongoing-trips/";
+        String url = "http://192.168.42.98:8000/discount/get-discount-codes/";
         StringRequest myRequest = new StringRequest(Request.Method.GET, url,
                 response -> {
                     try {
@@ -55,7 +42,7 @@ public class DriverPanelActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 },
-                error -> Toast.makeText(DriverPanelActivity.this, error.getMessage(), Toast.LENGTH_LONG).show()
+                error -> Toast.makeText(DiscountCodesActivity.this, error.getMessage(), Toast.LENGTH_LONG).show()
         );
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(myRequest);
@@ -64,22 +51,21 @@ public class DriverPanelActivity extends AppCompatActivity {
     private void addDivider(RecyclerView recyclerView) {
         recyclerView.addItemDecoration(
                 new DividerItemDecoration(
-                        DriverPanelActivity.this,
+                        DiscountCodesActivity.this,
                         LinearLayoutManager.VERTICAL
                 )
         );
     }
 
     private void handleRecyclerView() {
-        RecyclerView recyclerView = findViewById(R.id.tripRecyclerView);
-        Button acceptButton = findViewById(R.id.acceptButton);
+        RecyclerView recyclerView = findViewById(R.id.discountCodeRecyclerView);
         addDivider(recyclerView);
         LinearLayoutManager verticalLayoutManager = new LinearLayoutManager(
-                DriverPanelActivity.this,
+                DiscountCodesActivity.this,
                 LinearLayoutManager.VERTICAL,
                 false
         );
-        adapter = new TripAdapter(new String[][]{}, DriverPanelActivity.this, acceptButton, username);
+        adapter = new DiscountAdapter(new String[][]{}, DiscountCodesActivity.this);
         recyclerView.setLayoutManager(verticalLayoutManager);
         recyclerView.setAdapter(adapter);
     }
