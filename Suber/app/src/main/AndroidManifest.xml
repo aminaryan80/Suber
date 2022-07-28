@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.app.suber">
+    package="com.app.suber" >
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -14,7 +14,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Suber"
         android:usesCleartextTraffic="true"
-        tools:targetApi="n">
+        tools:targetApi="n" >
+        <activity
+            android:name=".ui.panel.WithdrawActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.panel.DriverProfileActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.panel.DiscountCodesActivity"
             android:exported="false" />
@@ -29,7 +35,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.account.LoginActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

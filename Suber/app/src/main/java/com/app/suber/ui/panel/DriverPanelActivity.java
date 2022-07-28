@@ -1,8 +1,10 @@
 package com.app.suber.ui.panel;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,10 +21,19 @@ import com.app.suber.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 public class DriverPanelActivity extends AppCompatActivity {
     private TripAdapter adapter;
     private String username;
+    private TextView balanceTextView;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updatePage();
+        updateData();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +46,7 @@ public class DriverPanelActivity extends AppCompatActivity {
         Button reloadButton = findViewById(R.id.reloadButton);
         Button acceptButton = findViewById(R.id.acceptButton);
         ConstraintLayout driverPanelView = findViewById(R.id.driverPanelView);
+        balanceTextView = findViewById(R.id.balanceTextView);
 
         driverPanelView.setOnClickListener(view -> acceptButton.setEnabled(false));
 
@@ -42,7 +54,24 @@ public class DriverPanelActivity extends AppCompatActivity {
 
         handleRecyclerView();
         updateData();
+        updatePage();
 
+    }
+
+    private void updatePage() {
+        String url = "http://192.168.42.98:8000/account/get-profile/?user_type=D&username=" + username;
+        @SuppressLint("SetTextI18n") StringRequest myRequest = new StringRequest(Request.Method.GET, url,
+                response -> {
+                    try {
+                        JSONObject jsonResponse = new JSONObject(response);
+                        balanceTextView.setText("balance: " + jsonResponse.get("balance") + "$");
+                    } catch (JSONException ignored) {
+                    }
+                },
+                error -> Toast.makeText(DriverPanelActivity.this, error.getMessage(), Toast.LENGTH_LONG).show()
+        );
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(myRequest);
     }
 
     private void updateData() {
