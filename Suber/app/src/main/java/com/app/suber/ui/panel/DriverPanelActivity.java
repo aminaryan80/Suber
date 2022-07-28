@@ -40,10 +40,10 @@ public class DriverPanelActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driver_panel);
 
-        Intent intent = getIntent();
-        username = intent.getStringExtra("username");
+        username = getIntent().getStringExtra("username");
 
         Button reloadButton = findViewById(R.id.reloadButton);
+        Button profileButton = findViewById(R.id.profileButton);
         Button acceptButton = findViewById(R.id.acceptButton);
         ConstraintLayout driverPanelView = findViewById(R.id.driverPanelView);
         balanceTextView = findViewById(R.id.balanceTextView);
@@ -55,6 +55,12 @@ public class DriverPanelActivity extends AppCompatActivity {
         handleRecyclerView();
         updateData();
         updatePage();
+
+        profileButton.setOnClickListener(view -> {
+            Intent intent = new Intent(DriverPanelActivity.this, DriverProfileActivity.class);
+            intent.putExtra("username", username);
+            startActivity(intent);
+        });
 
     }
 
